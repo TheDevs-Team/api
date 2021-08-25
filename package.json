@@ -7,13 +7,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev -T -I node_modules src/server.ts",
-    "pre-commit:lint": "yarn tslint --project tsconfig.json && eslint --fix",
-    "lint": "yarn tslint --project tsconfig.json && eslint '/**/.{js,jsx,ts,tsx}' --fix"
+    "lint": "eslint '*/**/*.{js,jsx,ts,tsx}' --fix ",
+    "pretty": "prettier --config ./.prettierrc.js --write \"src/**/*.{js,jsx,ts,tsx,json}\""
   },
   "lint-staged": {
-    "/**/.{js,jsx,ts,tsx}": [
-      "yarn prettier --write src",
-      "yarn pre-commit:lint"
+    "*/**/*.{js,ts}": [
+      "yarn lint",
+      "yarn pretty"
     ]
   },
   "husky": {
