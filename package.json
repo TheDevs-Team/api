@@ -1,0 +1,46 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/TheDevs-Team/api.git",
+  "author": "gustavo-evaristo <gug.henri1@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev -T -I node_modules src/server.ts",
+    "pre-commit:lint": "yarn tslint --project tsconfig.json && eslint --fix",
+    "lint": "yarn tslint --project tsconfig.json && eslint '/**/.{js,jsx,ts,tsx}' --fix"
+  },
+  "lint-staged": {
+    "/**/.{js,jsx,ts,tsx}": [
+      "yarn prettier --write src",
+      "yarn pre-commit:lint"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged --no-stash",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "@types/express": "^4.17.13",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "husky": "4.3.0",
+    "install": "^0.13.0",
+    "lint-staged": "11.0.0",
+    "prettier": "^2.3.2",
+    "ts-node-dev": "^1.1.8",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-plugin-prettier": "2.3",
+    "typescript": "^4.3.5"
+  }
+}
