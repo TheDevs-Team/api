@@ -6,7 +6,7 @@
   "author": "gustavo-evaristo <gug.henri1@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -T -I node_modules src/server.ts",
+    "dev": "ts-node-dev -T -I node_modules src/server.ts --env.NODE_ENV=DEV",
     "lint": "eslint '*/**/*.{js,jsx,ts,tsx}' --fix ",
     "pretty": "prettier --config ./.prettierrc.js --write \"src/**/*.{js,jsx,ts,tsx,json}\""
   },
@@ -23,12 +23,22 @@
     }
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.37",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
+    "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.13",
+    "@types/sequelize": "^4.28.10",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
     "eslint": "^7.32.0",
