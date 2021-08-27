@@ -43,19 +43,23 @@ class UserController {
 
     try {
       const user = await User.findOne({ where: [{ document }, { email }, { id }] });
-      if (isEmpty(user)) throw res.status(404).json({ code: STATUS_CODE.E10 });
+      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E10 });
       return res.status(200).json({ data: user });
     } catch (err) {
-      return res.status(200).json({ code: STATUS_CODE.E01 });
+      return res.status(400).json({ code: STATUS_CODE.E01 });
     }
   }
 
   async list(req: Request, res: Response): Promise<Response> {
-    const User = getRepository(UserModel);
+    try {
+      const User = getRepository(UserModel);
 
-    const users = await User.find();
+      const users = await User.find();
 
-    return res.status(200).json(users);
+      return res.status(200).json({ data: users });
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
   }
 }
 
