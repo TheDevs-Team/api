@@ -76,6 +76,46 @@ class UserController {
 
       return res.status(200).json({ code: STATUS_CODE.S01 });
     } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
+  async disable(req: Request, res: Response) {
+    const User = getRepository(UserModel);
+
+    try {
+      const { id, active }: DisableUserType = req.body;
+
+      const user = await User.findOne({ where: { id } });
+
+      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E10 });
+
+      await User.update({ id }, { active });
+
+      return res.status(200).json({ code: STATUS_CODE.S01 });
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    const User = getRepository(UserModel);
+
+    try {
+      const { email, id, name, phone, type, document, password, confirm_password }: UpdateUserType = req.body;
+
+      const user = await User.findOne({ where: { id } });
+
+      if (!isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E10 });
+
+      if (!isValidDocument(document)) throw res.status(400).json({ code: STATUS_CODE.E12 });
+
+      if (!isValidPassword(password, confirm_password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
+
+      await User.update({ id }, { email, name, phone, type, document, password: encryptPassword(password) });
+
+      return res.status(200).json({ code: STATUS_CODE.S01 });
+    } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E10 });
     }
   }
