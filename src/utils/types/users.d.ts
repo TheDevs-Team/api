@@ -42,3 +42,8 @@ declare type DisableUserType = {
   id: string;
   active: boolean;
 };
+
+declare type UserLoginType = {
+  email: string;
+  password: string;
+};
