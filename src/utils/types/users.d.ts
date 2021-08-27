@@ -20,3 +20,9 @@ declare type UserType = {
   created_at?: Date;
   updated_at?: Date;
 };
+
+declare type FindUserType = {
+  id: string;
+  email: string;
+  document: string;
+};
