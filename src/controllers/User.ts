@@ -29,7 +29,7 @@ class UserController {
 
     await User.save(user);
 
-    return res.json(user);
+    return res.json({ data: user });
   }
 }
 
