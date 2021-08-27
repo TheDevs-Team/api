@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid';
 @Entity('users')
 export class User {
   @PrimaryColumn()
-  id!: string;
+  id: string;
 
   @Column()
   name!: string;
@@ -26,7 +26,7 @@ export class User {
   type!: string;
 
   @Column()
-  active!: boolean;
+  active: boolean;
 
   @CreateDateColumn()
   created_at!: Date;

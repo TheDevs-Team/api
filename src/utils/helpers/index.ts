@@ -1,5 +1,5 @@
 import { hashSync } from 'bcryptjs';
-import { CNPJ, CPF } from '../modules';
+import { CNPJ, CPF } from '~/utils';
 
 export const isValidPassword = (password: string, confirm_password: string): boolean => {
   return password === confirm_password;
