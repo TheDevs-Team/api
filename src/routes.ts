@@ -11,5 +11,6 @@ routes.put('/user/update', UserController.update);
 routes.put('/user/disable', UserController.disable);
 routes.delete('/user/delete', UserController.delete);
 routes.get('/user/list', UserController.list);
+routes.post('/login', UserController.login);
 
 export default routes;

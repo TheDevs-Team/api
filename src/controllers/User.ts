@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { User as UserModel } from '~/models';
-import { isValidPassword, STATUS_CODE, encryptPassword, isValidDocument } from '~/utils';
+import { isValidPassword, STATUS_CODE, encryptPassword, isValidDocument, decryptPassword } from '~/utils';
 import { isEmpty } from 'lodash';
 
 class UserController {
@@ -43,7 +44,7 @@ class UserController {
 
     try {
       const user = await User.findOne({ where: [{ document }, { email }, { id }] });
-      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E10 });
+      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
       return res.status(200).json({ data: user });
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
@@ -62,7 +63,7 @@ class UserController {
     }
   }
 
-  async delete(req: Request, res: Response) {
+  async delete(req: Request, res: Response): Promise<Response> {
     const User = getRepository(UserModel);
 
     try {
@@ -70,7 +71,7 @@ class UserController {
 
       const user = await User.findOne({ where: { id } });
 
-      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E10 });
+      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
 
       await User.delete(id);
 
@@ -80,7 +81,7 @@ class UserController {
     }
   }
 
-  async disable(req: Request, res: Response) {
+  async disable(req: Request, res: Response): Promise<Response> {
     const User = getRepository(UserModel);
 
     try {
@@ -88,7 +89,7 @@ class UserController {
 
       const user = await User.findOne({ where: { id } });
 
-      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E10 });
+      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
 
       await User.update({ id }, { active });
 
@@ -98,7 +99,7 @@ class UserController {
     }
   }
 
-  async update(req: Request, res: Response) {
+  async update(req: Request, res: Response): Promise<Response> {
     const User = getRepository(UserModel);
 
     try {
@@ -116,7 +117,27 @@ class UserController {
 
       return res.status(200).json({ code: STATUS_CODE.S01 });
     } catch (err) {
-      return res.status(400).json({ code: STATUS_CODE.E10 });
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
+  async login(req: Request, res: Response) {
+    const User = getRepository(UserModel);
+    try {
+      const { email, password }: UserLoginType = req.body;
+
+      const user = await User.findOne({
+        select: ['email', 'password'],
+        where: { email, active: true },
+      });
+
+      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
+
+      if (!decryptPassword(password, user?.password as string)) throw res.status(400).json({ code: STATUS_CODE.E13 });
+
+      return res.json(user);
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
     }
   }
 }
