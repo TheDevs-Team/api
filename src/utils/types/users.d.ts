@@ -1,4 +1,4 @@
-declare type CreateUsersType = {
+declare type CreateUserType = {
   name: string;
   document: string;
   email: string;
@@ -7,7 +7,7 @@ declare type CreateUsersType = {
   password: string;
 };
 
-declare type UsersType = {
+declare type UserType = {
   id: string;
   name: string;
   document: string;
