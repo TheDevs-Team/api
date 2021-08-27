@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { User as UserModel } from '../models/User';
-import { isValidPassword, STATUS_CODE, encryptPassword, isValidDocument } from '../utils';
+import { User as UserModel } from '~/models';
+import { isValidPassword, STATUS_CODE, encryptPassword, isValidDocument } from '~/utils';
 import { isEmpty } from 'lodash';
 
 class UserController {
