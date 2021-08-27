@@ -51,14 +51,32 @@ class UserController {
   }
 
   async list(req: Request, res: Response): Promise<Response> {
-    try {
-      const User = getRepository(UserModel);
+    const User = getRepository(UserModel);
 
+    try {
       const users = await User.find();
 
       return res.status(200).json({ data: users });
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
+  async delete(req: Request, res: Response) {
+    const User = getRepository(UserModel);
+
+    try {
+      const { id }: FindUserType = req.body;
+
+      const user = await User.findOne({ where: { id } });
+
+      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E10 });
+
+      await User.delete(id);
+
+      return res.status(200).json({ code: STATUS_CODE.S01 });
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E10 });
     }
   }
 }

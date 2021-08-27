@@ -1,9 +1,14 @@
 /* eslint-disable no-unused-vars */
 export enum STATUS_CODE {
   /**
-  @description Default
+  @description Default Success
   **/
-  E01 = 'EO1',
+  S01 = 'SO1', //Default Success
+
+  /**
+  @description Default Error
+  **/
+  E01 = 'EO1', //Default Error
 
   /**
   @description User error
