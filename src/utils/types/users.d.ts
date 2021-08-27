@@ -5,6 +5,7 @@ declare type CreateUserType = {
   phone: string;
   type: string;
   password: string;
+  confirm_password: string;
 };
 
 declare type UserType = {
