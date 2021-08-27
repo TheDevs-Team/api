@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { User as UserModel } from '../models/User';
-import { isValidPassword, STATUS_CODE } from '../utils';
+import { isValidPassword, STATUS_CODE, encryptPassword, isValidDocument } from '../utils';
 import { isEmpty } from 'lodash';
-import { hashSync } from 'bcryptjs';
 
 class UserController {
   async create(req: Request, res: Response) {
     const User = getRepository(UserModel);
 
     const { name, document, email, phone, type, password, confirm_password }: CreateUserType = req.body;
+
+    if (!isValidDocument(document)) throw res.status(400).json({ code: STATUS_CODE.E12 });
 
     if (!isValidPassword(password, confirm_password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
 
@@ -23,7 +24,7 @@ class UserController {
       email,
       phone,
       type,
-      password: hashSync(password, 8),
+      password: encryptPassword(password),
     });
 
     await User.save(user);
