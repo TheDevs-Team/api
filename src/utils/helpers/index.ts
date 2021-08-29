@@ -12,19 +12,11 @@ export const encryptPassword = (password: string): string => {
 };
 
 export const decryptPassword = (password: string, passwordCompare: string): boolean => {
-  if (compareSync(password, passwordCompare)) {
-    return true;
-  }
-
-  return false;
+  return compareSync(password, passwordCompare);
 };
 
 export const isValidDocument = (document: string): boolean => {
-  if (CPF.isValid(document) || CNPJ.isValid(document)) {
-    return true;
-  }
-
-  return false;
+  return CPF.isValid(document) || CNPJ.isValid(document);
 };
 
 export const generateToken = (id: string): string => {
