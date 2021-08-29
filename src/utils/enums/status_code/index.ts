@@ -17,4 +17,5 @@ export enum STATUS_CODE {
   E11 = 'E11', // User not exist
   E12 = 'E12', // Invalid document
   E13 = 'E13', // Invalid password
+  E14 = 'E14', // Not Authorized
 }
