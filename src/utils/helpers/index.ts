@@ -1,5 +1,7 @@
 import { compareSync, hashSync } from 'bcryptjs';
 import { CNPJ, CPF } from '~/utils';
+import jwt from 'jsonwebtoken';
+import { secret } from '~/config';
 
 export const isValidPassword = (password?: string, confirm_password?: string): boolean => {
   return password === confirm_password;
@@ -23,4 +25,10 @@ export const isValidDocument = (document: string): boolean => {
   }
 
   return false;
+};
+
+export const generateToken = (id: string): string => {
+  return jwt.sign({ id }, secret.key, {
+    expiresIn: '30d',
+  });
 };
