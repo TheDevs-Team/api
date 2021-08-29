@@ -69,7 +69,7 @@ class UserController {
     try {
       const { id }: FindUserType = req.body;
 
-      const user = await User.findOne({ where: { id } });
+      const user = await User.findOne({ id });
 
       if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
 
@@ -87,7 +87,7 @@ class UserController {
     try {
       const { id, active }: DisableUserType = req.body;
 
-      const user = await User.findOne({ where: { id } });
+      const user = await User.findOne({ id });
 
       if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
 
@@ -105,7 +105,7 @@ class UserController {
     try {
       const { email, id, name, phone, type, document, password, confirm_password }: UpdateUserType = req.body;
 
-      const user = await User.findOne({ where: { id } });
+      const user = await User.findOne({ id });
 
       if (!isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E10 });
 
