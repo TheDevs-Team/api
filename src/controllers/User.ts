@@ -4,6 +4,7 @@ import { getRepository } from 'typeorm';
 import { User as UserModel } from '~/models';
 import { isValidPassword, STATUS_CODE, encryptPassword, isValidDocument, decryptPassword } from '~/utils';
 import { isEmpty } from 'lodash';
+import jwt from 'jsonwebtoken';
 
 class UserController {
   async create(req: Request, res: Response): Promise<Response> {
@@ -127,7 +128,7 @@ class UserController {
       const { email, password }: UserLoginType = req.body;
 
       const user = await User.findOne({
-        select: ['email', 'password'],
+        select: ['id', 'email', 'password'],
         where: { email, active: true },
       });
 
@@ -135,7 +136,11 @@ class UserController {
 
       if (!decryptPassword(password, user?.password as string)) throw res.status(400).json({ code: STATUS_CODE.E13 });
 
-      return res.json(user);
+      const token = jwt.sign({ id: user?.id as string }, 'defd6b4924c8b5f91bc7435976782153', {
+        expiresIn: '30d',
+      });
+
+      return res.json({ data: user, token });
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
