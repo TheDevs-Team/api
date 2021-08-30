@@ -13,6 +13,7 @@ routes.put('/user/update', authentication, UserController.update);
 routes.put('/user/disable', authentication, UserController.disable);
 routes.delete('/user/delete', authentication, UserController.delete);
 routes.get('/user/list', authentication, UserController.list);
+routes.get('/files', UserController.files);
 
 routes.get('*', (req: Request, res: Response) => res.status(400).json({ error: 'no route found' }));
 routes.post('*', (req: Request, res: Response) => res.status(400).json({ error: 'no route found' }));

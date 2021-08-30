@@ -11,6 +11,7 @@ import {
   generateToken,
 } from '~/utils';
 import { isEmpty } from 'lodash';
+import { cloudinary } from '~/config';
 
 class UserController {
   async create(req: Request, res: Response): Promise<Response> {
@@ -145,6 +146,17 @@ class UserController {
       return res.json({ data: user, token: generateToken(user.id) });
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
+  async files(req: Request, res: Response) {
+    try {
+      const test = await cloudinary.uploader.upload('/home/gustavo/Pictures/Wallpapers/260837.jpg');
+
+      console.log(test);
+      res.status(200).json({ ok: true });
+    } catch (err) {
+      return res.status(500).json(err);
     }
   }
 }
