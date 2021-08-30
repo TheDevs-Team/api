@@ -133,16 +133,16 @@ class UserController {
     try {
       const { email, password }: UserLoginType = req.body;
 
-      const user = await User.findOne({
+      const user = (await User.findOne({
         select: ['id', 'email', 'password'],
         where: { email, active: true },
-      });
+      })) as UserModel & UserType;
 
       if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
 
-      if (!decryptPassword(password, user?.password as string)) throw res.status(400).json({ code: STATUS_CODE.E13 });
+      if (!decryptPassword(password, user.password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
 
-      return res.json({ data: user, token: generateToken(user?.id as string) });
+      return res.json({ data: user, token: generateToken(user.id) });
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
