@@ -10,9 +10,9 @@ export const authentication = (req: Request, res: Response, next: NextFunction):
   if (isEmpty(token)) throw res.status(401).json({ code: STATUS_CODE.E14 });
 
   jwt.verify(token as string, secret.key, (err, decoded) => {
-    if (err) throw res.status(401).json({ code: STATUS_CODE.E13 });
+    if (err) throw res.status(401).json({ code: STATUS_CODE.E14 });
 
-    req.userId = decoded?.id;
+    req.user = decoded?.id;
 
     return next();
   });

@@ -47,10 +47,10 @@ class UserController {
   async index(req: Request, res: Response): Promise<Response> {
     const User = getRepository(UserModel);
 
-    const { document, email, id }: FindUserType = req.body;
+    const id = req.user;
 
     try {
-      const user = await User.findOne({ where: [{ document }, { email }, { id }] });
+      const user = await User.findOne({ id });
       if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
       return res.status(200).json({ data: user });
     } catch (err) {
