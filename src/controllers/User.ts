@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
+import DatauriParser from 'datauri/parser';
 import { User as UserModel } from '~/models';
+import path from 'path';
 import {
   isValidPassword,
   STATUS_CODE,
@@ -23,7 +25,7 @@ class UserController {
 
     if (!isValidPassword(password, confirm_password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
 
-    const findUser = await User.findOne({ where: [{ document }, { email }] });
+    const findUser = await User.findOne({ where: [{ document }, { email: email.toLocaleLowerCase() }] });
 
     if (!isEmpty(findUser)) throw res.status(404).json({ code: STATUS_CODE.E10 });
 
@@ -31,7 +33,7 @@ class UserController {
       const user = User.create({
         name,
         document,
-        email,
+        email: email.toLocaleLowerCase(),
         phone,
         type,
         password: encryptPassword(password),
@@ -121,7 +123,10 @@ class UserController {
 
       if (!isValidPassword(password, confirm_password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
 
-      await User.update({ id }, { email, name, phone, type, document, password: encryptPassword(password) });
+      await User.update(
+        { id },
+        { email: email.toLocaleLowerCase(), name, phone, type, document, password: encryptPassword(password) },
+      );
 
       return res.status(200).json({ code: STATUS_CODE.S01 });
     } catch (err) {
@@ -136,14 +141,14 @@ class UserController {
 
       const user = (await User.findOne({
         select: ['id', 'email', 'password'],
-        where: { email, active: true },
+        where: { email: email.toLocaleLowerCase(), active: true },
       })) as UserModel & UserType;
 
       if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
 
       if (!decryptPassword(password, user.password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
 
-      return res.json({ data: user, token: generateToken(user.id) });
+      return res.json({ token: generateToken(user.id) });
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
@@ -151,10 +156,16 @@ class UserController {
 
   async files(req: Request, res: Response) {
     try {
-      const test = await cloudinary.uploader.upload('/home/gustavo/Pictures/Wallpapers/260837.jpg');
+      const dUri = new DatauriParser();
 
+      const dataUri = (req: any) => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
+      const file = dataUri(req).content;
+
+      const test = await cloudinary.uploader.upload(file as string);
+
+      console.log(req.file);
       console.log(test);
-      res.status(200).json({ ok: true });
+      // res.status(200).json({ ok: true });
     } catch (err) {
       return res.status(500).json(err);
     }
