@@ -18,7 +18,7 @@
       "baseUrl": "./src",
     },
 
-    "include": ["./src/**/*.ts", "./src/**/*.d.ts", "./src/**/*.json", "src/config/multer.js", "src/config/multer.js"],
+    "include": ["./src/**/*.ts", "./src/**/*.d.ts", "./src/**/*.json"],
 
     "exclude": [
       "node_modules",
