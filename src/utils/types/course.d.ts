@@ -11,3 +11,8 @@ declare type CourseType = {
   created_at: Date;
   updated_at: Date;
 };
+
+declare type UpdateCourseType = {
+  id: string;
+  name: string;
+};

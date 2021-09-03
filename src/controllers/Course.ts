@@ -56,6 +56,22 @@ class CourseController {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
   }
+
+  async update(req: Request, res: Response): Promise<Response> {
+    const Course = getRepository(CourseModel);
+    try {
+      const { id, name }: UpdateCourseType = req.body;
+      const course = (await Course.findOne({ id })) as CourseModel & CourseType;
+
+      if (isEmpty(course)) throw res.status(400).json({ code: STATUS_CODE.E21 });
+
+      await Course.update({ id }, { name });
+
+      return res.status(200).json({ code: STATUS_CODE.S01 });
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
 }
 
 export default new CourseController();
