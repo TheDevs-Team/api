@@ -23,4 +23,5 @@ export enum STATUS_CODE {
   @description Course error
   **/
   E20 = 'E20', // User is not admin or a manager
+  E21 = 'E21', // Course not exists
 }
