@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import UserController from '~/controllers/User';
+import { UserController, CourseController } from '~/controllers';
 import { authentication } from '~/middlewares';
 import multer from 'multer';
 
@@ -16,6 +16,9 @@ routes.put('/user/disable', authentication, UserController.disable);
 routes.delete('/user/delete', authentication, UserController.delete);
 routes.get('/user/list', authentication, UserController.list);
 routes.post('/files', multerUploads, UserController.files);
+
+routes.post('/course/create', authentication, CourseController.create);
+routes.get('/course/list', authentication, CourseController.list);
 
 routes.get('*', (req: Request, res: Response) => res.status(400).json({ error: 'no route found' }));
 routes.post('*', (req: Request, res: Response) => res.status(400).json({ error: 'no route found' }));

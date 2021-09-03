@@ -18,4 +18,9 @@ export enum STATUS_CODE {
   E12 = 'E12', // Invalid document
   E13 = 'E13', // Invalid password
   E14 = 'E14', // Not Authorized
+
+  /**
+  @description Course error
+  **/
+  E20 = 'E20', // User is not admin or a manager
 }

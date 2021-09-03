@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import DatauriParser from 'datauri/parser';
