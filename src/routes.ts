@@ -19,6 +19,7 @@ routes.post('/files', multerUploads, UserController.files);
 
 routes.post('/course/create', authentication, CourseController.create);
 routes.get('/course/list', authentication, CourseController.list);
+routes.delete('/course/delete', authentication, CourseController.delete);
 routes.put('/course/update', authentication, CourseController.update);
 
 export default routes;
