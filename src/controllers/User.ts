@@ -40,7 +40,7 @@ class UserController {
 
       await User.save(user);
 
-      return res.status(201).json({ data: user, token: generateToken(user.id) });
+      return res.status(201).json({ user, token: generateToken(user.id) });
     } catch (err) {
       return res.status(404).json({ code: STATUS_CODE.E01 });
     }
@@ -160,10 +160,8 @@ class UserController {
       const dataUri = (req: any) => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
       const file = dataUri(req).content;
 
-      const test = await cloudinary.uploader.upload(file as string);
+      await cloudinary.uploader.upload(file as string);
 
-      console.log(req.file);
-      console.log(test);
       // res.status(200).json({ ok: true });
     } catch (err) {
       return res.status(500).json(err);
