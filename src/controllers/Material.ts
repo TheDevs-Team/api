@@ -13,13 +13,13 @@ class MaterialController {
     const Material = getRepository(MaterialModel);
 
     try {
-      const { name, course_id }: CreateMaterialType = req.body;
+      const { name, course_id, type, file }: CreateMaterialType = req.body;
 
       const course = (await Course.findOne({ where: { id: course_id } })) as CourseModel & CourseType;
 
       if (isEmpty(course)) throw res.status(400).json({ code: STATUS_CODE.E21 });
 
-      const material = Material.create({ name, course_id }) as MaterialModel & MaterialType;
+      const material = Material.create({ name, type, file, course_id }) as MaterialModel & MaterialType;
 
       await Material.save(material);
 

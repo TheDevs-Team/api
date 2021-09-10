@@ -1,5 +1,7 @@
 declare type CreateMaterialType = {
   name: string;
+  type: string;
+  file: string;
   course_id: string;
 };
 
