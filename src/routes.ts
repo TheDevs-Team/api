@@ -22,4 +22,7 @@ routes.get('/course/list', authentication, CourseController.list);
 routes.delete('/course/delete', authentication, CourseController.delete);
 routes.put('/course/update', authentication, CourseController.update);
 
+routes.post('/material/create', MaterialController.create);
+routes.get('/material/list', MaterialController.list);
+
 export default routes;

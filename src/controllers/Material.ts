@@ -29,6 +29,18 @@ class MaterialController {
     }
   }
 
+  async list(req: Request, res: Response): Promise<Response> {
+    const Material = getRepository(MaterialModel);
+
+    try {
+      const material = await Material.find({ relations: ['course'] });
+
+      return res.status(201).json(material);
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
   async uploadFile(req: Request, res: Response) {
     try {
       const dUri = new DatauriParser();
