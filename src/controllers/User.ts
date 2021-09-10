@@ -160,9 +160,9 @@ class UserController {
       const dataUri = (req: any) => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
       const file = dataUri(req).content;
 
-      await cloudinary.uploader.upload(file as string);
+      const { url } = await cloudinary.uploader.upload(file as string);
 
-      // res.status(200).json({ ok: true });
+      res.status(200).json({ img: url });
     } catch (err) {
       return res.status(500).json(err);
     }
