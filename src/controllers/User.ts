@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import DatauriParser from 'datauri/parser';
 import { User as UserModel } from '~/models';
-import path from 'path';
 import {
   isValidPassword,
   STATUS_CODE,
@@ -12,7 +10,6 @@ import {
   generateToken,
 } from '~/utils';
 import { isEmpty } from 'lodash';
-import { cloudinary } from '~/config';
 
 class UserController {
   async create(req: Request, res: Response): Promise<Response> {
@@ -150,21 +147,6 @@ class UserController {
       return res.json({ token: generateToken(user.id) });
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
-    }
-  }
-
-  async files(req: Request, res: Response) {
-    try {
-      const dUri = new DatauriParser();
-
-      const dataUri = (req: any) => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
-      const file = dataUri(req).content;
-
-      const { secure_url } = await cloudinary.uploader.upload(file as string);
-
-      res.status(200).json({ img: secure_url });
-    } catch (err) {
-      return res.status(500).json(err);
     }
   }
 }
