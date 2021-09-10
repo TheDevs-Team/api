@@ -8,6 +8,7 @@ import {
   isValidDocument,
   decryptPassword,
   generateToken,
+  sendMail,
 } from '~/utils';
 import { isEmpty } from 'lodash';
 
@@ -35,7 +36,11 @@ class UserController {
         password: encryptPassword(password),
       });
 
-      await User.save(user);
+      const response = await User.save(user);
+
+      if (response) {
+        sendMail(email, name, password);
+      }
 
       return res.status(201).json({ user, token: generateToken(user.id) });
     } catch (err) {
