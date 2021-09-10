@@ -12,7 +12,7 @@ class CourseController {
     try {
       const manager_id = req.user;
 
-      const { name }: CreateCourseType = req.body;
+      const { name, description }: CreateCourseType = req.body;
 
       const user = (await User.findOne({
         id: manager_id,
@@ -22,7 +22,7 @@ class CourseController {
 
       if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E20 });
 
-      const course = Course.create({ name, manager_id }) as CourseModel & CourseType;
+      const course = Course.create({ name, description, manager_id }) as CourseModel & CourseType;
 
       await Course.save(course);
 

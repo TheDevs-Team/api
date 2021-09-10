@@ -11,6 +11,9 @@ export class Course {
   @Column()
   name!: string;
 
+  @Column()
+  description!: string;
+
   @JoinColumn({ name: 'manager_id' })
   @ManyToOne(() => User)
   user!: User;

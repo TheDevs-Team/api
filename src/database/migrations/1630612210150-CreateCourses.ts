@@ -18,6 +18,10 @@ export class CreateCourses1630612210150 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'description',
+            type: 'varchar',
+          },
+          {
             name: 'manager_id',
             type: 'varchar',
             isNullable: true,
