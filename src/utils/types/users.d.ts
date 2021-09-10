@@ -4,6 +4,7 @@ declare type CreateUserType = {
   email: string;
   phone: string;
   type: string;
+  financial_status: string;
   password: string;
   confirm_password: string;
 };
@@ -15,6 +16,7 @@ declare type UpdateUserType = {
   email: string;
   phone: string;
   type: string;
+  financial_status: string;
   password: string;
   confirm_password: string;
 };
@@ -26,6 +28,7 @@ declare type UserType = {
   email: string;
   phone: string;
   type: string;
+  financial_status: string;
   password: string;
   active: boolean;
   created_at?: Date;

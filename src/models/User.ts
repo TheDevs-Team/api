@@ -26,6 +26,9 @@ export class User {
   type!: string;
 
   @Column()
+  financial_status!: string;
+
+  @Column()
   active: boolean;
 
   @CreateDateColumn()
