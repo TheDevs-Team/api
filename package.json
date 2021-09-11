@@ -25,10 +25,8 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "cloudinary": "^1.26.3",
     "cors": "^2.8.5",
     "cpf-cnpj-validator": "^1.0.3",
-    "datauri": "^4.1.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "googleapis": "^85.0.0",
@@ -65,7 +63,6 @@
     "eslint-plugin-import-helpers": "^1.1.0",
     "eslint-plugin-prettier": "^3.4.1",
     "husky": "4.3.0",
-    "install": "^0.13.0",
     "lint-staged": "11.0.0",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",

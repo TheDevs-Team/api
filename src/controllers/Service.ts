@@ -3,7 +3,6 @@ import path from 'path';
 import fs from 'fs';
 import { google } from 'googleapis';
 import { GoogleDriveConfig } from '~/config';
-// import { STATUS_CODE } from '~/utils';
 
 class ServiceController {
   async uploadFile(req: Request, res: Response) {
