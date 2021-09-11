@@ -191,13 +191,13 @@ class UserController {
         active: false,
       }) as TemporaryUserType;
 
-      await User.save(user);
+      const response = await User.save(user);
 
-      // if (response) {
-      //   sendMail(email, name, password);
-      // }
+      if (response) {
+        sendMail(email, name, response.id);
+      }
 
-      return res.status(201).json({ user, token: generateToken(user.id) });
+      return res.status(201).json({ code: STATUS_CODE.S01 });
     } catch (err) {
       return res.status(404).json({ code: STATUS_CODE.E01 });
     }

@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-export const sendMail = (email: string, name: string, password: string): void => {
+export const sendMail = (email: string, name: string, id: string): void => {
   // Configurando conta para enviar e-mails
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -16,8 +16,8 @@ export const sendMail = (email: string, name: string, password: string): void =>
   transporter.sendMail({
     from: 'G2K Investimentos <gug.henri2@gmail.com>',
     to: email,
-    subject: 'Cadastro Realizado - G2K Investimentos',
+    subject: 'Estamos quase lá - G2K Investimentos',
     text: 'Seu cadastro foi realizado com sucesso em nossa plataforma!',
-    html: `${name}, Seu cadastro foi realizado com sucesso em nossa plataforma! <br> Não perca tempo e acesse agora mesmo! <br> <strong> Dados de acesso: </strong> <br> email: ${email} <br> senha: ${password}`,
+    html: `${name}, Seu cadastro foi realizado com sucesso em nossa plataforma! <br><br> Agora você só precisa criar sua senha e ativar sua conta agora mesmo! <br><br> <strong> Acesse: http://localhost:3000/active-account?id=${id}</strong> }`,
   });
 };
