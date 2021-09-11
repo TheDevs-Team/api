@@ -18,6 +18,6 @@ export const sendMail = (email: string, name: string, id: string): void => {
     to: email,
     subject: 'Estamos quase lá - G2K Investimentos',
     text: 'Seu cadastro foi realizado com sucesso em nossa plataforma!',
-    html: `${name}, Seu cadastro foi realizado com sucesso em nossa plataforma! <br><br> Agora você só precisa criar sua senha e ativar sua conta agora mesmo! <br><br> <strong> Acesse: http://localhost:3000/active-account?id=${id}</strong> }`,
+    html: `${name}, Seu cadastro foi realizado com sucesso em nossa plataforma! <br><br> Agora você só precisa criar sua senha e ativar sua conta agora mesmo! <br><br> <a href="http://localhost:3000/active-account?id=${id}"> <strong>Clique aqui para ativar sua conta.</strong></a>`,
   });
 };
