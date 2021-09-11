@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import { UserController, CourseController, MaterialController, ServiceController } from '~/controllers';
+import {
+  UserController,
+  CourseController,
+  MaterialController,
+  ServiceController,
+  StudentCourseController,
+} from '~/controllers';
 import { authentication } from '~/middlewares';
 import uploads from './config/multer';
 
@@ -30,13 +36,20 @@ routes.put('/course/update', authentication, CourseController.update);
   @description Material Controller
 **/
 
-routes.post('/material/create', MaterialController.create);
-routes.get('/material/list', MaterialController.list);
+routes.post('/material/create', authentication, MaterialController.create);
+routes.get('/material/list', authentication, MaterialController.list);
+
+/**
+  @description Students Course Controller
+**/
+
+routes.post('/student-course/create', authentication, StudentCourseController.create);
+routes.get('/student-course/list', authentication, StudentCourseController.list);
 
 /**
   @description Service Controller
 **/
 
-routes.get('/service/file/create', uploads.single('file'), ServiceController.uploadFile);
+routes.get('/service/file/create', authentication, uploads.single('file'), ServiceController.uploadFile);
 
 export default routes;
