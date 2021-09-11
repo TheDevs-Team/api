@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
 
-export class CreateCourses1630612210150 implements MigrationInterface {
+export class CreateMaterials1631365676792 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'courses',
+        name: 'materials',
         columns: [
           {
             name: 'id',
@@ -18,17 +18,17 @@ export class CreateCourses1630612210150 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'description',
+            name: 'type',
             type: 'varchar',
           },
           {
-            name: 'manager_id',
+            name: 'file',
+            type: 'varchar',
+          },
+          {
+            name: 'course_id',
             type: 'varchar',
             isNullable: true,
-          },
-          {
-            name: 'active',
-            type: 'boolean',
           },
           {
             name: 'created_at',
@@ -47,17 +47,17 @@ export class CreateCourses1630612210150 implements MigrationInterface {
     queryRunner.clearSqlMemory();
 
     const foreignKey = new TableForeignKey({
-      columnNames: ['manager_id'],
+      columnNames: ['course_id'],
       referencedColumnNames: ['id'],
-      referencedTableName: 'users',
+      referencedTableName: 'courses',
       onDelete: 'SET NULL',
       onUpdate: 'SET NULL',
     });
 
-    await queryRunner.createForeignKey('courses', foreignKey);
+    await queryRunner.createForeignKey('materials', foreignKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('courses');
+    await queryRunner.dropTable('materials');
   }
 }

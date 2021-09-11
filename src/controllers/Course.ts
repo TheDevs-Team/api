@@ -35,7 +35,7 @@ class CourseController {
   async list(req: Request, res: Response): Promise<Response> {
     const Course = getRepository(CourseModel);
 
-    const courses = (await Course.find({ active: true })) as CourseModel[] & CourseType[];
+    const courses = (await Course.find({ relations: ['user'] })) as CourseModel[] & CourseType[];
 
     return res.status(200).json(courses);
   }

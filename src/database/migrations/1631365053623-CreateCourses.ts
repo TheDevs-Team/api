@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
 
-export class CreateStudentsCourses1631360979062 implements MigrationInterface {
+export class CreateCourses1631365053623 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'students_courses',
+        name: 'courses',
         columns: [
           {
             name: 'id',
@@ -14,18 +14,21 @@ export class CreateStudentsCourses1631360979062 implements MigrationInterface {
             isUnique: true,
           },
           {
-            name: 'course_id',
+            name: 'name',
+            type: 'varchar',
+          },
+          {
+            name: 'description',
+            type: 'varchar',
+          },
+          {
+            name: 'manager_id',
             type: 'varchar',
             isNullable: true,
           },
           {
-            name: 'user_id',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'status',
-            type: 'varchar',
+            name: 'active',
+            type: 'boolean',
           },
           {
             name: 'created_at',
@@ -43,28 +46,18 @@ export class CreateStudentsCourses1631360979062 implements MigrationInterface {
 
     queryRunner.clearSqlMemory();
 
-    const foreignKeyCourse = new TableForeignKey({
-      columnNames: ['course_id'],
-      referencedColumnNames: ['id'],
-      referencedTableName: 'courses',
-      onDelete: 'SET NULL',
-      onUpdate: 'SET NULL',
-    });
-
-    await queryRunner.createForeignKey('students_courses', foreignKeyCourse);
-
-    const foreignKeyUser = new TableForeignKey({
-      columnNames: ['user_id'],
+    const foreignKey = new TableForeignKey({
+      columnNames: ['manager_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'users',
       onDelete: 'SET NULL',
       onUpdate: 'SET NULL',
     });
 
-    await queryRunner.createForeignKey('students_courses', foreignKeyUser);
+    await queryRunner.createForeignKey('courses', foreignKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('students_courses');
+    await queryRunner.dropTable('courses');
   }
 }

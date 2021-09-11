@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
 
-export class CreateMaterials1631305045744 implements MigrationInterface {
+export class CreateStudentsCourses1631365901666 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'materials',
+        name: 'studentsCourses',
         columns: [
           {
             name: 'id',
@@ -14,21 +14,18 @@ export class CreateMaterials1631305045744 implements MigrationInterface {
             isUnique: true,
           },
           {
-            name: 'name',
-            type: 'varchar',
-          },
-          {
-            name: 'type',
-            type: 'varchar',
-          },
-          {
-            name: 'file',
-            type: 'varchar',
-          },
-          {
             name: 'course_id',
             type: 'varchar',
             isNullable: true,
+          },
+          {
+            name: 'user_id',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'status',
+            type: 'varchar',
           },
           {
             name: 'created_at',
@@ -46,7 +43,7 @@ export class CreateMaterials1631305045744 implements MigrationInterface {
 
     queryRunner.clearSqlMemory();
 
-    const foreignKey = new TableForeignKey({
+    const foreignKeyCourse = new TableForeignKey({
       columnNames: ['course_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'courses',
@@ -54,10 +51,20 @@ export class CreateMaterials1631305045744 implements MigrationInterface {
       onUpdate: 'SET NULL',
     });
 
-    await queryRunner.createForeignKey('materials', foreignKey);
+    await queryRunner.createForeignKey('studentsCourses', foreignKeyCourse);
+
+    const foreignKeyUser = new TableForeignKey({
+      columnNames: ['user_id'],
+      referencedColumnNames: ['id'],
+      referencedTableName: 'users',
+      onDelete: 'SET NULL',
+      onUpdate: 'SET NULL',
+    });
+
+    await queryRunner.createForeignKey('studentsCourses', foreignKeyUser);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('materials');
+    await queryRunner.dropTable('studentsCourses');
   }
 }

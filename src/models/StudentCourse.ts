@@ -3,7 +3,7 @@ import { User, Course } from '~/models';
 
 import { v4 as uuid } from 'uuid';
 
-@Entity('students_courses')
+@Entity('studentsCourses')
 export class StudentCourse {
   @PrimaryColumn()
   id: string;
