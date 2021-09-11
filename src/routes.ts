@@ -37,6 +37,6 @@ routes.get('/material/list', MaterialController.list);
   @description Service Controller
 **/
 
-routes.get('/files', uploads.single('file'), ServiceController.uploadFile);
+routes.get('/service/file/create', uploads.single('file'), ServiceController.uploadFile);
 
 export default routes;
