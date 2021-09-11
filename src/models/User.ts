@@ -29,7 +29,7 @@ export class User {
   financial_status!: string;
 
   @Column()
-  active: boolean;
+  active!: boolean;
 
   @CreateDateColumn()
   created_at!: Date;
@@ -39,6 +39,6 @@ export class User {
 
   constructor() {
     this.id = uuid();
-    this.active = true;
+    if (!this.active) this.active = true;
   }
 }

@@ -120,15 +120,27 @@ class UserController {
 
       const user = await User.findOne({ id });
 
-      if (!isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E10 });
+      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
 
-      if (!isValidDocument(document)) throw res.status(400).json({ code: STATUS_CODE.E12 });
+      const findUser = await User.findOne({ where: [{ document }, { email: email.toLocaleLowerCase() }] });
+
+      if (!isEmpty(findUser)) throw res.status(400).json({ code: STATUS_CODE.E10 });
+
+      if (!isEmpty(document) && !isValidDocument(document)) throw res.status(400).json({ code: STATUS_CODE.E12 });
 
       if (!isValidPassword(password, confirm_password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
 
       await User.update(
         { id },
-        { email: email.toLocaleLowerCase(), name, phone, type, document, password: encryptPassword(password) },
+        {
+          email: email.toLocaleLowerCase(),
+          name,
+          phone,
+          type,
+          document,
+          password: encryptPassword(password),
+          active: true,
+        },
       );
 
       return res.status(200).json({ code: STATUS_CODE.S01 });
@@ -152,6 +164,66 @@ class UserController {
       if (!decryptPassword(password, user.password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
 
       return res.json({ token: generateToken(user.id) });
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
+  async createTemporaryUser(req: Request, res: Response): Promise<Response> {
+    const User = getRepository(UserModel);
+
+    const { name, document, email, phone, type, financial_status }: CreateTemporaryUserType = req.body;
+
+    if (!isValidDocument(document)) throw res.status(400).json({ code: STATUS_CODE.E12 });
+
+    const findUser = await User.findOne({ where: [{ document }, { email: email.toLocaleLowerCase() }] });
+
+    if (!isEmpty(findUser)) throw res.status(404).json({ code: STATUS_CODE.E10 });
+
+    try {
+      const user = User.create({
+        name,
+        document,
+        email: email.toLocaleLowerCase(),
+        phone,
+        type,
+        financial_status,
+        active: false,
+      }) as TemporaryUserType;
+
+      await User.save(user);
+
+      // if (response) {
+      //   sendMail(email, name, password);
+      // }
+
+      return res.status(201).json({ user, token: generateToken(user.id) });
+    } catch (err) {
+      return res.status(404).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
+  async updateTemporaryUser(req: Request, res: Response): Promise<Response> {
+    const User = getRepository(UserModel);
+
+    try {
+      const { id, password, confirm_password }: UpdateTemporaryUserType = req.body;
+
+      const user = (await User.findOne({ where: [{ id }, { active: false }] })) as UserModel & UserType;
+
+      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E15 });
+
+      if (!isValidPassword(password, confirm_password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
+
+      await User.update(
+        { id },
+        {
+          password: encryptPassword(password),
+          active: true,
+        },
+      );
+
+      return res.status(200).json({ code: STATUS_CODE.S01 });
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }

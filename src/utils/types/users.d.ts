@@ -50,3 +50,31 @@ declare type UserLoginType = {
   email: string;
   password: string;
 };
+
+declare type CreateTemporaryUserType = {
+  name: string;
+  document: string;
+  email: string;
+  phone: string;
+  type: string;
+  financial_status: string;
+};
+
+declare type UpdateTemporaryUserType = {
+  id: string;
+  password: string;
+  confirm_password: string;
+};
+
+declare type TemporaryUserType = {
+  id: string;
+  name: string;
+  document: string;
+  email: string;
+  phone: string;
+  type: string;
+  financial_status: string;
+  active: boolean;
+  created_at?: Date;
+  updated_at?: Date;
+};

@@ -24,6 +24,13 @@ routes.delete('/user/delete', authentication, UserController.delete);
 routes.get('/user/list', authentication, UserController.list);
 
 /**
+  @description User Temporary Controller
+**/
+
+routes.post('/temporary-user/create', UserController.createTemporaryUser);
+routes.put('/temporary-user/update', UserController.updateTemporaryUser);
+
+/**
   @description Course Controller
 **/
 
