@@ -1,21 +1,45 @@
 import { Request, Response } from 'express';
-import DatauriParser from 'datauri/parser';
 import path from 'path';
-import { cloudinary } from '~/config';
+import fs from 'fs';
+import { google } from 'googleapis';
+import { GoogleDriveConfig } from '~/config';
+import { STATUS_CODE } from '~/utils';
 
 class ServiceController {
   async uploadFile(req: Request, res: Response) {
+    const KEYFILEPATH = path.join(__dirname, '..', 'config', 'ServiceAccountCred.json');
+
+    const auth = new google.auth.GoogleAuth({
+      keyFile: KEYFILEPATH,
+      scopes: GoogleDriveConfig.scopes,
+    });
+
     try {
-      const dUri = new DatauriParser();
+      const drive = google.drive({ version: 'v3', auth });
 
-      const dataUri = (req: any) => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
-      const file = dataUri(req).content;
+      const media = {
+        mimeType: req.file?.mimetype,
+        body: fs.createReadStream(req.file?.path as string),
+      };
 
-      const { format, secure_url } = await cloudinary.uploader.upload(file as string);
+      const fileData = {
+        name: req.file?.originalname as string,
+        parents: [GoogleDriveConfig.folderId],
+      };
 
-      res.status(200).json({ type: format, file: secure_url });
+      const response = await drive.files.create({
+        media,
+        requestBody: fileData,
+        fields: 'id',
+      });
+
+      if (response.data.id) {
+        fs.unlinkSync(req.file?.path as string);
+      }
+
+      return res.status(200).json({ code: STATUS_CODE.S01 });
     } catch (err) {
-      return res.status(500).json(err);
+      return res.status(400).json(err);
     }
   }
 }

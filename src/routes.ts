@@ -1,12 +1,9 @@
 import { Router } from 'express';
 import { UserController, CourseController, MaterialController, ServiceController } from '~/controllers';
 import { authentication } from '~/middlewares';
-import multer from 'multer';
+import uploads from './config/multer';
 
 const routes = Router();
-const storage = multer.memoryStorage();
-
-const multerUploads = multer({ storage }).single('file');
 
 /**
   @description User Controller
@@ -40,6 +37,6 @@ routes.get('/material/list', MaterialController.list);
   @description Service Controller
 **/
 
-routes.post('/files', multerUploads, ServiceController.uploadFile);
+routes.get('/files', uploads.single('file'), ServiceController.uploadFile);
 
 export default routes;
