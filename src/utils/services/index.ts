@@ -13,18 +13,11 @@ export const sendMail = (email: string, name: string, password: string): void =>
   });
 
   // Definindo destino e conteudo
-  transporter
-    .sendMail({
-      from: 'G2K Investimentos <gug.henri2@gmail.com>',
-      to: email,
-      subject: 'Cadastro Realizado - G2K Investimentos',
-      text: 'Seu cadastro foi realizado com sucesso em nossa plataforma!',
-      html: `${name}, Seu cadastro foi realizado com sucesso em nossa plataforma! <br> Não perca tempo e acesse agora mesmo! <br> <strong> Dados de acesso: </strong> <br> email: ${email} <br> senha: ${password}`,
-    })
-    .then((message) => {
-      console.log(message);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  transporter.sendMail({
+    from: 'G2K Investimentos <gug.henri2@gmail.com>',
+    to: email,
+    subject: 'Cadastro Realizado - G2K Investimentos',
+    text: 'Seu cadastro foi realizado com sucesso em nossa plataforma!',
+    html: `${name}, Seu cadastro foi realizado com sucesso em nossa plataforma! <br> Não perca tempo e acesse agora mesmo! <br> <strong> Dados de acesso: </strong> <br> email: ${email} <br> senha: ${password}`,
+  });
 };
