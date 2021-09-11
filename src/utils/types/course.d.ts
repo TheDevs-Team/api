@@ -9,6 +9,7 @@ declare type CourseType = {
   name: string;
   description: string;
   manager_id: string;
+  user: UserType;
   active: boolean;
   created_at: Date;
   updated_at: Date;

@@ -11,6 +11,7 @@ declare type MaterialType = {
   type: string;
   file: string;
   course_id: string;
+  course: CourseType;
   created_at: Date;
   updated_at: Date;
 };
