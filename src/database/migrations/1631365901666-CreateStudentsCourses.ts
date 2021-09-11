@@ -53,6 +53,8 @@ export class CreateStudentsCourses1631365901666 implements MigrationInterface {
 
     await queryRunner.createForeignKey('studentsCourses', foreignKeyCourse);
 
+    queryRunner.clearSqlMemory();
+
     const foreignKeyUser = new TableForeignKey({
       columnNames: ['user_id'],
       referencedColumnNames: ['id'],

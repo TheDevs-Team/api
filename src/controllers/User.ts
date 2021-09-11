@@ -16,7 +16,8 @@ class UserController {
   async create(req: Request, res: Response): Promise<Response> {
     const User = getRepository(UserModel);
 
-    const { name, document, email, phone, type, password, confirm_password }: CreateUserType = req.body;
+    const { name, document, email, phone, type, password, confirm_password, financial_status }: CreateUserType =
+      req.body;
 
     if (!isValidDocument(document)) throw res.status(400).json({ code: STATUS_CODE.E12 });
 
@@ -34,6 +35,7 @@ class UserController {
         phone,
         type,
         password: encryptPassword(password),
+        financial_status,
       });
 
       const response = await User.save(user);
