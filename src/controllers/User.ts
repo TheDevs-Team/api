@@ -163,7 +163,7 @@ class UserController {
 
       if (!decryptPassword(password, user.password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
 
-      return res.json({ token: generateToken(user.id) });
+      return res.json({ user, token: generateToken(user.id) });
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
