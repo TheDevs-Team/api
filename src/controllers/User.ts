@@ -155,7 +155,6 @@ class UserController {
       const { email, password }: UserLoginType = req.body;
 
       const user = (await User.findOne({
-        select: ['id', 'email', 'password'],
         where: { email: email.toLocaleLowerCase(), active: true },
       })) as UserModel & UserType;
 
