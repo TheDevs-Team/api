@@ -34,10 +34,10 @@ routes.put('/temporary-user/update', UserController.updateTemporaryUser);
   @description Course Controller
 **/
 
-routes.post('/course/create', authentication, CourseController.create);
+routes.post('/course', authentication, CourseController.create);
 routes.get('/course/list', authentication, CourseController.list);
-routes.delete('/course/delete', authentication, CourseController.delete);
-routes.put('/course/update', authentication, CourseController.update);
+routes.post('/course/delete', authentication, CourseController.delete);
+routes.put('/course', authentication, CourseController.update);
 
 /**
   @description Material Controller
