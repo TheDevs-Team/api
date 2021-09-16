@@ -36,7 +36,7 @@ routes.put('/temporary-user/update', UserController.updateTemporaryUser);
 
 routes.post('/course', authentication, CourseController.find);
 routes.get('/course/list', authentication, CourseController.list);
-routes.post('/course', authentication, CourseController.create);
+routes.post('/course/create', authentication, CourseController.create);
 routes.post('/course/delete', authentication, CourseController.delete);
 routes.put('/course', authentication, CourseController.update);
 
