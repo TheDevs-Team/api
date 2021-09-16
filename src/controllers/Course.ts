@@ -40,6 +40,18 @@ class CourseController {
     return res.status(200).json(courses);
   }
 
+  async find(req: Request, res: Response): Promise<Response> {
+    const Course = getRepository(CourseModel);
+
+    const { id }: CourseType = req.body;
+
+    const courses = (await Course.findOne({ id }, { relations: ['user'] })) as CourseModel & CourseType;
+
+    if (isEmpty(courses)) throw res.status(400).json({ code: STATUS_CODE.E21 });
+
+    return res.status(200).json(courses);
+  }
+
   async delete(req: Request, res: Response): Promise<Response> {
     const Course = getRepository(CourseModel);
 
