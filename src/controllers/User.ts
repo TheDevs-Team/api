@@ -68,9 +68,11 @@ class UserController {
     const User = getRepository(UserModel);
 
     try {
-      const users = await User.find();
+      const users = await User.find({
+        order: { name: 'ASC' },
+      });
 
-      return res.status(200).json({ data: users });
+      return res.status(200).json(users);
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
