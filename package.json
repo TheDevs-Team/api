@@ -6,13 +6,12 @@
   "author": "gustavo-evaristo <gug.henri1@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "clear": "rimraf build",
     "start": "node build/server.js",
     "dev": "ts-node-dev -T -I node_modules -r tsconfig-paths/register src/server.ts",
     "lint": "eslint '*/**/*.{js,jsx,ts,tsx}' --fix ",
     "pretty": "prettier --config ./.prettierrc.js --write \"src/**/*.{js,jsx,ts,tsx,json}\"",
     "migrate": "ts-node-dev node_modules/typeorm/cli.js ",
-    "build": "yarn tsc",
+    "build": "tsc",
     "test": "jest"
   },
   "lint-staged": {
