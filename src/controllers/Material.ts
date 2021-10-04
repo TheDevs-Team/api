@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { isEmpty } from 'lodash';
 import { getRepository } from 'typeorm';
-import { Course as CourseModel, Material as MaterialModel } from '~/models';
-import { STATUS_CODE } from '~/utils';
+import { Course as CourseModel, Material as MaterialModel } from '../models';
+import { STATUS_CODE } from '../utils';
 
 class MaterialController {
   async create(req: Request, res: Response): Promise<Response> {

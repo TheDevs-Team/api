@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 import { google } from 'googleapis';
-import { GoogleDriveConfig } from '~/config';
+import { GoogleDriveConfig } from '../config';
 
 class ServiceController {
   async uploadFile(req: Request, res: Response) {

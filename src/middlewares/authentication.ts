@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { isEmpty } from 'lodash';
 import { Request, Response, NextFunction } from 'express';
-import { STATUS_CODE } from '~/utils';
-import { secret } from '~/config';
+import { STATUS_CODE } from '../utils';
+import { secret } from '../config';
 
 export const authentication = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.headers.authorization;

@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { User, Course } from '~/models';
+import { User, Course } from '../models';
 
 import { v4 as uuid } from 'uuid';
 
