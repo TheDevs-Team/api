@@ -1,7 +1,7 @@
 import { compareSync, hashSync } from 'bcryptjs';
-import { CNPJ, CPF } from '~/utils';
+import { CNPJ, CPF } from '../../utils';
 import jwt from 'jsonwebtoken';
-import { secret } from '~/config';
+import { secret } from '../../config';
 
 export const isValidPassword = (password?: string, confirm_password?: string): boolean => {
   return password === confirm_password;

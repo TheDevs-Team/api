@@ -5,8 +5,8 @@ import {
   MaterialController,
   ServiceController,
   StudentCourseController,
-} from '~/controllers';
-import { authentication } from '~/middlewares';
+} from './controllers';
+import { authentication } from './middlewares';
 import uploads from './config/multer';
 
 const routes = Router();

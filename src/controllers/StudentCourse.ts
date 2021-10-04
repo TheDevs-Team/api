@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { isEmpty } from 'lodash';
 import { getRepository } from 'typeorm';
-import { Course as CourseModel, User as UserModel, StudentCourse as StudentCourseModel } from '~/models';
-import { STATUS_CODE } from '~/utils';
+import { Course as CourseModel, User as UserModel, StudentCourse as StudentCourseModel } from '../models';
+import { STATUS_CODE } from '../utils';
 
 class StudentCourseController {
   async create(req: Request, res: Response): Promise<Response> {
