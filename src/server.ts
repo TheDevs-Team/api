@@ -2,4 +2,4 @@ import app from './app';
 
 const port = process.env.PORT || 3333;
 
-app.listen(port, () => console.log('Running in dev'));
+app.listen(port, () => console.log('Running at port', port));
