@@ -20,7 +20,7 @@ routes.post('/user/login', UserController.login);
 routes.post('/user/create', UserController.create);
 routes.put('/user/update', authentication, UserController.update);
 routes.put('/user/disable', authentication, UserController.disable);
-routes.delete('/user/delete', authentication, UserController.delete);
+routes.post('/user/delete', authentication, UserController.delete);
 routes.get('/user/list', UserController.list);
 
 /**
