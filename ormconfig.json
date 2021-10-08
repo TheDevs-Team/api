@@ -7,10 +7,10 @@
     "database": "heroku_d7d95b5a48f91fe",
     "synchronize": true,
     "logging": false,
-    "entities": ["./build/models/**.js"],
-    "migrations": ["./build/database/migrations/**.js"],
+    "entities": ["./src/models/**.ts"],
+    "migrations": ["./src/database/migrations/**.ts"],
     "cli": {
-      "entitiesDir": "./build/models/",
-      "migrationsDir": "./build/database/migrations/"
+      "entitiesDir": "./src/models/",
+      "migrationsDir": "./src/database/migrations/"
     }
   }
