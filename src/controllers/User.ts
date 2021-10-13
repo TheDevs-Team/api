@@ -72,7 +72,11 @@ class UserController {
         order: { name: 'ASC' },
       });
 
-      return res.status(200).json(users);
+      const allUsers = users.map((user: UserType) => {
+        return { ...user, financial_status: user.financial_status === 'PAID' ? 'PAGO' : 'AGUARDANDO PAGAMENTO' };
+      });
+
+      return res.status(200).json(allUsers);
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
