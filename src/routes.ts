@@ -5,6 +5,7 @@ import {
   MaterialController,
   ServiceController,
   StudentCourseController,
+  DashboardController,
 } from './controllers';
 import { authentication } from './middlewares';
 import uploads from './config/multer';
@@ -20,7 +21,7 @@ routes.post('/user/login', UserController.login);
 routes.post('/user/create', UserController.create);
 routes.put('/user/update', authentication, UserController.update);
 routes.put('/user/disable', authentication, UserController.disable);
-routes.delete('/user/delete', authentication, UserController.delete);
+routes.post('/user/delete', authentication, UserController.delete);
 routes.get('/user/list', UserController.list);
 
 /**
@@ -59,5 +60,14 @@ routes.get('/student-course/list', authentication, StudentCourseController.list)
 **/
 
 routes.get('/service/file/create', authentication, uploads.single('file'), ServiceController.uploadFile);
+
+/**
+  @description Dashboard Controller
+**/
+
+routes.get('/dashboard/users/all', DashboardController.allUsers);
+routes.get('/dashboard/users/pending', DashboardController.pendingUsers);
+routes.get('/dashboard/courses/all', DashboardController.allCourses);
+routes.get('/dashboard/materials/all', DashboardController.allMaterials);
 
 export default routes;
