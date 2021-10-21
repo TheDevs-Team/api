@@ -65,6 +65,7 @@ routes.get('/service/file/create', authentication, uploads.single('file'), Servi
   @description Dashboard Controller
 **/
 
+routes.get('/dashboard/index', DashboardController.index);
 routes.get('/dashboard/users/all', DashboardController.allUsers);
 routes.get('/dashboard/users/pending', DashboardController.pendingUsers);
 routes.get('/dashboard/courses/all', DashboardController.allCourses);

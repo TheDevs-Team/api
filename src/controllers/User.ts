@@ -58,7 +58,7 @@ class UserController {
     try {
       const user = await User.findOne({ id });
       if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
-      return res.status(200).json({ data: user });
+      return res.status(200).json(user);
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }

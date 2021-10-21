@@ -3,6 +3,20 @@ import { getRepository } from 'typeorm';
 import { User as UserModel, Course as CourseModel, Material as MaterialModel } from '../models';
 
 class DashBoardController {
+  async index(req: Request, res: Response): Promise<Response> {
+    const User = getRepository(UserModel);
+    const Course = getRepository(CourseModel);
+    const Material = getRepository(MaterialModel);
+
+    const users = (await User.find()).length;
+    const pendings = (await User.find({ where: { financial_status: 'WAITING_PAYMENT' } })).length;
+
+    const courses = (await Course.find()).length;
+    const materials = (await Material.find()).length;
+
+    return res.status(200).json({ users, courses, materials, pendings });
+  }
+
   async allUsers(req: Request, res: Response): Promise<Response> {
     const User = getRepository(UserModel);
 
