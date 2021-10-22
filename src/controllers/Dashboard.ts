@@ -8,7 +8,7 @@ class DashBoardController {
     const Course = getRepository(CourseModel);
     const Material = getRepository(MaterialModel);
 
-    const users = (await User.find()).length;
+    const users = await User.find();
     const pendings = (await User.find({ where: { financial_status: 'WAITING_PAYMENT' } })).length;
 
     const courses = (await Course.find()).length;
@@ -19,7 +19,63 @@ class DashBoardController {
 
     const materials = (await Material.find()).length;
 
-    return res.status(200).json({ users, courses, materials, pendings, newCourses });
+    return res.status(200).json({
+      users: users.length,
+      courses,
+      materials,
+      pendings,
+      newCourses,
+      dataGraphics: [
+        {
+          name: 'Jan',
+          alunos: 35,
+        },
+        {
+          name: 'Fev',
+          alunos: 10,
+        },
+        {
+          name: 'Mar',
+          alunos: 55,
+        },
+        {
+          name: 'Abr',
+          alunos: 30,
+        },
+        {
+          name: 'Mai',
+          alunos: 85,
+        },
+        {
+          name: 'Jun',
+          alunos: 50,
+        },
+        {
+          name: 'Jul',
+          alunos: 105,
+        },
+        {
+          name: 'Ago',
+          alunos: 70,
+        },
+        {
+          name: 'Set',
+          alunos: 135,
+        },
+        {
+          name: 'Out',
+          alunos: 90,
+        },
+        {
+          name: 'Nov',
+          alunos: 155,
+        },
+        {
+          name: 'Dez',
+          alunos: 110,
+        },
+      ],
+    });
   }
 
   async allUsers(req: Request, res: Response): Promise<Response> {
