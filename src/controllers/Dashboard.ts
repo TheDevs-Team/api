@@ -14,7 +14,7 @@ class DashBoardController {
     const courses = (await Course.find()).length;
     const newCourses = await Course.find({
       order: { name: 'ASC' },
-      take: 3,
+      take: 4,
     });
 
     const materials = (await Material.find()).length;
