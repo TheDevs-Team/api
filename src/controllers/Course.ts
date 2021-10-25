@@ -20,7 +20,7 @@ class CourseController {
         active: true,
       })) as UserModel & UserType;
 
-      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E20 });
+      if (isEmpty(user)) return res.status(400).json({ code: STATUS_CODE.E20 });
 
       const course = Course.create({ name, description, manager_id }) as CourseModel & CourseType;
 
@@ -47,7 +47,7 @@ class CourseController {
 
     const courses = (await Course.findOne({ id }, { relations: ['user'] })) as CourseModel & CourseType;
 
-    if (isEmpty(courses)) throw res.status(400).json({ code: STATUS_CODE.E21 });
+    if (isEmpty(courses)) return res.status(400).json({ code: STATUS_CODE.E21 });
 
     return res.status(200).json(courses);
   }
@@ -59,7 +59,7 @@ class CourseController {
       const { id }: CourseType = req.body;
       const course = (await Course.findOne({ id })) as CourseModel & CourseType;
 
-      if (isEmpty(course)) throw res.status(400).json({ code: STATUS_CODE.E21 });
+      if (isEmpty(course)) return res.status(400).json({ code: STATUS_CODE.E21 });
 
       await Course.delete(id);
 
@@ -75,7 +75,7 @@ class CourseController {
       const { id, name }: UpdateCourseType = req.body;
       const course = (await Course.findOne({ id })) as CourseModel & CourseType;
 
-      if (isEmpty(course)) throw res.status(400).json({ code: STATUS_CODE.E21 });
+      if (isEmpty(course)) return res.status(400).json({ code: STATUS_CODE.E21 });
 
       await Course.update({ id }, { name });
 

@@ -15,11 +15,11 @@ class StudentCourseController {
 
       const user = (await User.findOne({ id: user_id })) as UserModel & UserType;
 
-      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
+      if (isEmpty(user)) return res.status(400).json({ code: STATUS_CODE.E11 });
 
       const course = (await Course.findOne({ id: course_id })) as CourseModel & CourseType;
 
-      if (isEmpty(course)) throw res.status(400).json({ code: STATUS_CODE.E21 });
+      if (isEmpty(course)) return res.status(400).json({ code: STATUS_CODE.E21 });
 
       const studentCourse = StudentCourse.create({ course_id, user_id }) as StudentCourseModel & StudentCourseType;
 
@@ -38,6 +38,20 @@ class StudentCourseController {
       const studentCourse = await StudentCourse.find({ relations: ['course', 'user'] });
 
       return res.status(201).json(studentCourse);
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
+  async find(req: Request, res: Response): Promise<Response> {
+    const StudentCourse = getRepository(StudentCourseModel);
+
+    const id = req.user;
+
+    try {
+      const studentCourse = await StudentCourse.find({ where: { user_id: id }, relations: ['course'] });
+
+      return res.status(200).json(studentCourse);
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }

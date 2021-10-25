@@ -54,6 +54,7 @@ routes.get('/material/list', authentication, MaterialController.list);
 
 routes.post('/student-course/create', authentication, StudentCourseController.create);
 routes.get('/student-course/list', authentication, StudentCourseController.list);
+routes.get('/student-course/find', authentication, StudentCourseController.find);
 
 /**
   @description Service Controller

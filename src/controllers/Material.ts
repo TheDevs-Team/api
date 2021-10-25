@@ -14,7 +14,7 @@ class MaterialController {
 
       const course = (await Course.findOne({ where: { id: course_id } })) as CourseModel & CourseType;
 
-      if (isEmpty(course)) throw res.status(400).json({ code: STATUS_CODE.E21 });
+      if (isEmpty(course)) return res.status(400).json({ code: STATUS_CODE.E21 });
 
       const material = Material.create({ name, type, file, course_id }) as MaterialModel & MaterialType;
 

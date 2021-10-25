@@ -19,13 +19,13 @@ class UserController {
     const { name, document, email, phone, type, password, confirm_password, financial_status }: CreateUserType =
       req.body;
 
-    if (!isValidDocument(document)) throw res.status(400).json({ code: STATUS_CODE.E12 });
+    if (!isValidDocument(document)) return res.status(400).json({ code: STATUS_CODE.E12 });
 
-    if (!isValidPassword(password, confirm_password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
+    if (!isValidPassword(password, confirm_password)) return res.status(400).json({ code: STATUS_CODE.E13 });
 
     const findUser = await User.findOne({ where: [{ document }, { email: email.toLocaleLowerCase() }] });
 
-    if (!isEmpty(findUser)) throw res.status(404).json({ code: STATUS_CODE.E10 });
+    if (!isEmpty(findUser)) return res.status(404).json({ code: STATUS_CODE.E10 });
 
     try {
       const user = User.create({
@@ -57,7 +57,7 @@ class UserController {
 
     try {
       const user = await User.findOne({ id });
-      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
+      if (isEmpty(user)) return res.status(400).json({ code: STATUS_CODE.E11 });
       return res.status(200).json(user);
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
@@ -90,7 +90,7 @@ class UserController {
 
       const user = await User.findOne({ id });
 
-      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
+      if (isEmpty(user)) return res.status(400).json({ code: STATUS_CODE.E11 });
 
       await User.delete(id);
 
@@ -108,7 +108,7 @@ class UserController {
 
       const user = await User.findOne({ id });
 
-      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
+      if (isEmpty(user)) return res.status(400).json({ code: STATUS_CODE.E11 });
 
       await User.update({ id }, { active });
 
@@ -126,15 +126,15 @@ class UserController {
 
       const user = await User.findOne({ id });
 
-      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
+      if (isEmpty(user)) return res.status(400).json({ code: STATUS_CODE.E11 });
 
       const findUser = await User.findOne({ where: [{ document }, { email: email.toLocaleLowerCase() }] });
 
-      if (!isEmpty(findUser)) throw res.status(400).json({ code: STATUS_CODE.E10 });
+      if (!isEmpty(findUser)) return res.status(400).json({ code: STATUS_CODE.E10 });
 
-      if (!isEmpty(document) && !isValidDocument(document)) throw res.status(400).json({ code: STATUS_CODE.E12 });
+      if (!isEmpty(document) && !isValidDocument(document)) return res.status(400).json({ code: STATUS_CODE.E12 });
 
-      if (!isValidPassword(password, confirm_password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
+      if (!isValidPassword(password, confirm_password)) return res.status(400).json({ code: STATUS_CODE.E13 });
 
       await User.update(
         { id },
@@ -164,9 +164,9 @@ class UserController {
         where: { email: email.toLocaleLowerCase(), active: true },
       })) as UserModel & UserType;
 
-      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E11 });
+      if (isEmpty(user)) return res.status(400).json({ code: STATUS_CODE.E11 });
 
-      if (!decryptPassword(password, user.password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
+      if (!decryptPassword(password, user.password)) return res.status(400).json({ code: STATUS_CODE.E13 });
 
       return res.json({ user, token: generateToken(user.id) });
     } catch (err) {
@@ -179,11 +179,11 @@ class UserController {
 
     const { name, document, email, phone, type, financial_status }: CreateTemporaryUserType = req.body;
 
-    if (!isValidDocument(document)) throw res.status(400).json({ code: STATUS_CODE.E12 });
+    if (!isValidDocument(document)) return res.status(400).json({ code: STATUS_CODE.E12 });
 
     const findUser = await User.findOne({ where: [{ document }, { email: email.toLocaleLowerCase() }] });
 
-    if (!isEmpty(findUser)) throw res.status(404).json({ code: STATUS_CODE.E10 });
+    if (!isEmpty(findUser)) return res.status(404).json({ code: STATUS_CODE.E10 });
 
     try {
       const user = User.create({
@@ -216,9 +216,9 @@ class UserController {
 
       const user = (await User.findOne({ where: [{ id }, { active: false }] })) as UserModel & UserType;
 
-      if (isEmpty(user)) throw res.status(400).json({ code: STATUS_CODE.E15 });
+      if (isEmpty(user)) return res.status(400).json({ code: STATUS_CODE.E15 });
 
-      if (!isValidPassword(password, confirm_password)) throw res.status(400).json({ code: STATUS_CODE.E13 });
+      if (!isValidPassword(password, confirm_password)) return res.status(400).json({ code: STATUS_CODE.E13 });
 
       await User.update(
         { id },

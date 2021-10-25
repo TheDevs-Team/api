@@ -7,10 +7,10 @@ import { secret } from '../config';
 export const authentication = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.headers.authorization;
 
-  if (isEmpty(token)) throw res.status(401).json({ code: STATUS_CODE.E14 });
+  if (isEmpty(token)) return res.status(401).json({ code: STATUS_CODE.E14 });
 
   jwt.verify(token as string, secret.key, (err, decoded) => {
-    if (err) throw res.status(401).json({ code: STATUS_CODE.E14 });
+    if (err) return res.status(401).json({ code: STATUS_CODE.E14 });
 
     req.user = decoded?.id;
 
