@@ -23,6 +23,7 @@ routes.put('/user/update', authentication, UserController.update);
 routes.put('/user/disable', authentication, UserController.disable);
 routes.post('/user/delete', authentication, UserController.delete);
 routes.get('/user/list', UserController.list);
+routes.get('/user/listByType', UserController.listByType);
 
 /**
   @description User Temporary Controller

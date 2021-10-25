@@ -9,6 +9,7 @@ import {
   decryptPassword,
   generateToken,
   sendMail,
+  TYPE_USER,
 } from '../utils';
 import { isEmpty } from 'lodash';
 
@@ -229,6 +230,26 @@ class UserController {
       );
 
       return res.status(200).json({ code: STATUS_CODE.S01 });
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
+  async listByType(req: Request, res: Response): Promise<Response> {
+    const User = getRepository(UserModel);
+
+    try {
+      const adms = await User.find({
+        where: { type: TYPE_USER.ADMIN },
+        order: { name: 'ASC' },
+      });
+
+      const users = await User.find({
+        where: { type: TYPE_USER.USER },
+        order: { name: 'ASC' },
+      });
+
+      return res.status(200).json({ adms, users });
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
