@@ -4,3 +4,4 @@ export { default as MaterialController } from './Material';
 export { default as ServiceController } from './Service';
 export { default as StudentCourseController } from './StudentCourse';
 export { default as DashboardController } from './Dashboard';
+export { default as NotificationController } from './Notification';

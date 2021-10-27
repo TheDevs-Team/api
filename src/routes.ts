@@ -6,6 +6,7 @@ import {
   ServiceController,
   StudentCourseController,
   DashboardController,
+  NotificationController,
 } from './controllers';
 import { authentication } from './middlewares';
 import uploads from './config/multer';
@@ -72,5 +73,11 @@ routes.get('/dashboard/users/all', DashboardController.allUsers);
 routes.get('/dashboard/users/pending', DashboardController.pendingUsers);
 routes.get('/dashboard/courses/all', DashboardController.allCourses);
 routes.get('/dashboard/materials/all', DashboardController.allMaterials);
+
+/**
+  @description Notification Controller
+**/
+
+routes.get('/service/sms/send', NotificationController.sendSMS);
 
 export default routes;
