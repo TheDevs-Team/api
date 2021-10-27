@@ -78,6 +78,6 @@ routes.get('/dashboard/materials/all', DashboardController.allMaterials);
   @description Notification Controller
 **/
 
-routes.get('/service/sms/send', NotificationController.sendSMS);
+routes.post('/notification/pendings', NotificationController.sendPendings);
 
 export default routes;
