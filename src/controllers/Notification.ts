@@ -24,6 +24,26 @@ class NotificationController {
       return res.status(400).json({ error: true });
     }
   }
+
+  async newCourses(req: Request, res: Response): Promise<Response> {
+    try {
+      const User = getRepository(UserModel);
+
+      const users = (await User.find({ where: { active: true } })) as UserModel & UserType[];
+
+      users.map((user: UserType) =>
+        sendMail(
+          user.email,
+          'Novos cursos disponíveis',
+          `<strong>${user.name}</strong>, Novos cursos foram disponibilizados na plataforma, corra e evolua seus estudos para o proximo nível. <br> <a href="#">www.google.com</a>`,
+        ),
+      );
+
+      return res.status(200).json({ ok: true });
+    } catch (err) {
+      return res.status(400).json({ error: true });
+    }
+  }
 }
 
 export default new NotificationController();

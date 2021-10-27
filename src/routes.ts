@@ -79,5 +79,6 @@ routes.get('/dashboard/materials/all', DashboardController.allMaterials);
 **/
 
 routes.get('/notification/pendings', NotificationController.pendings);
+routes.get('/notification/new-courses', NotificationController.newCourses);
 
 export default routes;
