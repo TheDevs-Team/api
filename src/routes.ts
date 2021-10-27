@@ -79,5 +79,6 @@ routes.get('/dashboard/materials/all', DashboardController.allMaterials);
 **/
 
 routes.post('/notification/pendings', NotificationController.sendPendings);
+routes.post('/notification/all-users', NotificationController.sendAllUsers);
 
 export default routes;

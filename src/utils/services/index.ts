@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import nodemailer from 'nodemailer';
 import { Client, TextContent } from '@zenvia/sdk';
 
-export const sendMail = (email: string, name: string, password: string): void => {
+export const sendMail = (to: string, subject: string, text: string, html: any): void => {
   // Configurando conta para enviar e-mails
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -16,23 +17,23 @@ export const sendMail = (email: string, name: string, password: string): void =>
   // Definindo destino e conteudo
   transporter.sendMail({
     from: 'G2K Investimentos <gug.henri2@gmail.com>',
-    to: email,
-    subject: 'Cadastro Realizado',
-    text: 'Seu cadastro foi realizado com sucesso em nossa plataforma!',
-    html: `${name}, Seu cadastro foi realizado com sucesso em nossa plataforma! <br><br> Agora você pode acessar sua conta com os seguintes dados: <br><br> Login: ${email} <br><br> Senha: ${password} <br><br> <a href="http://localhost:3000/entrar"> <strong>Clique aqui para acessar sua conta.</strong></a>`,
+    to,
+    subject,
+    text,
+    html,
   });
 };
 
 export const sendSMS = async (msg: string, to: string): Promise<void> => {
-  const client = new Client('0oYtEMZ2FkcjFVvs9Jqa7hRK-vdNUfYpqW1J');
+  const client = new Client('jDCJzZkFO_saU-a8w2T9FlQ1qZW48OP0ZOSG');
 
   const sms = client.getChannel('sms');
 
   const content = new TextContent(msg);
 
   try {
-    await sms.sendMessage('5511970256279', to, content);
-    return console.log('ok');
+    await sms.sendMessage('5511963851702', to, content);
+    return;
   } catch (err) {
     return console.log(err);
   }
