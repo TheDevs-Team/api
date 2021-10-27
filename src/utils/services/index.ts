@@ -23,7 +23,7 @@ export const sendMail = (email: string, name: string, password: string): void =>
   });
 };
 
-export const sendSMS = async (msg: string, to: string[]): Promise<void> => {
+export const sendSMS = async (msg: string, to: string): Promise<void> => {
   const client = new Client('0oYtEMZ2FkcjFVvs9Jqa7hRK-vdNUfYpqW1J');
 
   const sms = client.getChannel('sms');
@@ -31,9 +31,7 @@ export const sendSMS = async (msg: string, to: string[]): Promise<void> => {
   const content = new TextContent(msg);
 
   try {
-    to.map(async (phone: string) => {
-      await sms.sendMessage('5511970256279', phone, content);
-    });
+    await sms.sendMessage('5511970256279', to, content);
     return console.log('ok');
   } catch (err) {
     return console.log(err);
