@@ -68,17 +68,16 @@ routes.get('/service/file/create', authentication, uploads.single('file'), Servi
   @description Dashboard Controller
 **/
 
-routes.get('/dashboard/index', DashboardController.index);
-routes.get('/dashboard/users/all', DashboardController.allUsers);
-routes.get('/dashboard/users/pending', DashboardController.pendingUsers);
-routes.get('/dashboard/courses/all', DashboardController.allCourses);
-routes.get('/dashboard/materials/all', DashboardController.allMaterials);
+routes.get('/dashboard/index', authentication, DashboardController.index);
+routes.get('/dashboard/users/all', authentication, DashboardController.allUsers);
+routes.get('/dashboard/users/pending', authentication, DashboardController.pendingUsers);
+routes.get('/dashboard/courses/all', authentication, DashboardController.allCourses);
+routes.get('/dashboard/materials/all', authentication, DashboardController.allMaterials);
 
 /**
   @description Notification Controller
 **/
 
-routes.get('/notification/pendings', NotificationController.pendings);
-routes.get('/notification/new-courses', NotificationController.newCourses);
+routes.post('/notification/send', authentication, NotificationController.send);
 
 export default routes;
