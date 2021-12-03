@@ -24,7 +24,6 @@ class NotificationController {
 
           return;
         });
-        console.log('mandei os pendentes');
       }
 
       if (new_courses) {
@@ -36,7 +35,6 @@ class NotificationController {
               `<strong>${user.name}</strong>, Novos cursos foram disponibilizados na plataforma, corra e evolua seus estudos para o proximo nível. <br> <a href="#">www.google.com</a>`,
             ),
           );
-          console.log('mandei os cursos disponiveis');
         }, 60000);
       }
 
@@ -48,7 +46,6 @@ class NotificationController {
             `<strong>${user.name}</strong>, Estamos aqui para lembrar e motivar os seus estudos, acesse a plataforma e de continuidade a seus estudos. <br> <a href="#">www.google.com</a>`,
           ),
         );
-        console.log('mandei os lembretes');
       }
 
       return res.status(200).json({ ok: true });

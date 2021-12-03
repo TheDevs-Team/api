@@ -119,34 +119,28 @@ class UserController {
     const User = getRepository(UserModel);
 
     try {
-      const { email, id, name, phone, type, document, password, confirm_password }: UpdateUserType = req.body;
+      const { id, name, phone, type, password, confirm_password }: UpdateUserType = req.body;
 
       const user = await User.findOne({ id });
 
       if (isEmpty(user)) return res.status(400).json({ code: STATUS_CODE.E11 });
-
-      const findUser = await User.findOne({ where: [{ document }, { email: email.toLocaleLowerCase() }] });
-
-      if (!isEmpty(findUser)) return res.status(400).json({ code: STATUS_CODE.E10 });
-
-      if (!isEmpty(document) && !isValidDocument(document)) return res.status(400).json({ code: STATUS_CODE.E12 });
 
       if (!isValidPassword(password, confirm_password)) return res.status(400).json({ code: STATUS_CODE.E13 });
 
       await User.update(
         { id },
         {
-          email: email.toLocaleLowerCase(),
           name,
           phone,
           type,
-          document,
           password: encryptPassword(password),
           active: true,
         },
       );
 
-      return res.status(200).json({ code: STATUS_CODE.S01 });
+      const updatedUser = await User.findOne({ id });
+
+      return res.status(200).json(updatedUser);
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
