@@ -133,7 +133,7 @@ class UserController {
     const User = getRepository(UserModel);
 
     try {
-      const { id, name, phone, type, password, confirm_password }: UpdateUserType = req.body;
+      const { id, name, phone, financial_status, password, confirm_password }: UpdateUserType = req.body;
 
       const user = await User.findOne({ id });
 
@@ -146,7 +146,7 @@ class UserController {
         {
           name,
           phone,
-          type,
+          financial_status,
           password: encryptPassword(password),
           active: true,
         },
