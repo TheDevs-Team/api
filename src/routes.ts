@@ -18,6 +18,7 @@ const routes = Router();
 **/
 
 routes.get('/user/find', authentication, UserController.index);
+routes.post('/user/find-other-profile', authentication, UserController.getOtherProfile);
 routes.post('/user/login', UserController.login);
 routes.post('/user/create', UserController.create);
 routes.put('/user/update', authentication, UserController.update);

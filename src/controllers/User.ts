@@ -65,6 +65,20 @@ class UserController {
     }
   }
 
+  async getOtherProfile(req: Request, res: Response): Promise<Response> {
+    const User = getRepository(UserModel);
+
+    const { id } = req.body;
+
+    try {
+      const user = await User.findOne({ id });
+      if (isEmpty(user)) return res.status(400).json({ code: STATUS_CODE.E11 });
+      return res.status(200).json(user);
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
   async list(req: Request, res: Response): Promise<Response> {
     const User = getRepository(UserModel);
 
