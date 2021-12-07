@@ -58,6 +58,8 @@ routes.get('/material/list', authentication, MaterialController.list);
 routes.post('/student-course/create', authentication, StudentCourseController.create);
 routes.get('/student-course/list', authentication, StudentCourseController.list);
 routes.get('/student-course/find', authentication, StudentCourseController.find);
+routes.post('/student-course/not-in-course', authentication, StudentCourseController.notInCourse);
+routes.post('/student-course/in-course', authentication, StudentCourseController.inCourse);
 
 /**
   @description Service Controller

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { isEmpty } from 'lodash';
-import { getRepository } from 'typeorm';
+import { getRepository, Not } from 'typeorm';
 import { Course as CourseModel, User as UserModel, StudentCourse as StudentCourseModel } from '../models';
 import { STATUS_CODE } from '../utils';
 
@@ -52,6 +52,43 @@ class StudentCourseController {
       const studentCourse = await StudentCourse.find({ where: { user_id: id }, relations: ['course'] });
 
       return res.status(200).json(studentCourse);
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
+  async inCourse(req: Request, res: Response): Promise<Response> {
+    try {
+      const { course_id } = req.body;
+
+      const StudentCourse = getRepository(StudentCourseModel);
+
+      const students = await StudentCourse.find({
+        where: { course_id, status: 'IN_COURSE' },
+        relations: ['user'],
+      });
+
+      return res.status(200).json(students);
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
+
+  async notInCourse(req: Request, res: Response): Promise<Response> {
+    try {
+      const { course_id } = req.body;
+
+      const StudentCourse = getRepository(StudentCourseModel);
+
+      const students = await StudentCourse.find({
+        relations: ['user'],
+        where: {
+          course_id: Not(course_id),
+          user: { type: 'USER', financial_status: 'PAID', active: true },
+        },
+      });
+
+      return res.status(200).json(students);
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
