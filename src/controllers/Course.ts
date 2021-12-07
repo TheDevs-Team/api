@@ -35,7 +35,10 @@ class CourseController {
   async list(req: Request, res: Response): Promise<Response> {
     const Course = getRepository(CourseModel);
 
-    const courses = (await Course.find({ relations: ['user'] })) as CourseModel[] & CourseType[];
+    const courses = await Course.find({
+      order: { created_at: 'DESC' },
+      relations: ['user'],
+    });
 
     return res.status(200).json(courses);
   }
@@ -45,7 +48,10 @@ class CourseController {
 
     const { id }: CourseType = req.body;
 
-    const courses = (await Course.findOne({ id }, { relations: ['user'] })) as CourseModel & CourseType;
+    const courses = (await Course.findOne({
+      where: { id },
+      relations: ['user'],
+    })) as CourseModel & CourseType;
 
     if (isEmpty(courses)) return res.status(400).json({ code: STATUS_CODE.E21 });
 
