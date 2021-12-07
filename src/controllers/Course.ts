@@ -78,12 +78,12 @@ class CourseController {
   async update(req: Request, res: Response): Promise<Response> {
     const Course = getRepository(CourseModel);
     try {
-      const { id, name }: UpdateCourseType = req.body;
+      const { id, name, description }: UpdateCourseType = req.body;
       const course = (await Course.findOne({ id })) as CourseModel & CourseType;
 
       if (isEmpty(course)) return res.status(400).json({ code: STATUS_CODE.E21 });
 
-      await Course.update({ id }, { name });
+      await Course.update({ id }, { name, description });
 
       return res.status(200).json({ code: STATUS_CODE.S01 });
     } catch (err) {
