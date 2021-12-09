@@ -27,4 +27,9 @@ export enum STATUS_CODE {
   E21 = 'E21', // Course not exists
   E22 = 'E22', // User already in Course
   E23 = 'E23', // User not in Course
+
+  /**
+  @description Material error
+  **/
+  E24 = 'E24', // Material not exists
 }

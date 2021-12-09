@@ -43,6 +43,29 @@ class MaterialController {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
   }
+
+  async remove(req: Request, res: Response): Promise<Response> {
+    const Course = getRepository(CourseModel);
+    const Material = getRepository(MaterialModel);
+
+    try {
+      const { id, course_id }: RemoveMaterialType = req.body;
+
+      const course = (await Course.findOne({ where: { id: course_id } })) as CourseModel & CourseType;
+
+      if (isEmpty(course)) return res.status(400).json({ code: STATUS_CODE.E21 });
+
+      const material = Material.findOne({ where: { id, course_id } });
+
+      if (isEmpty(material)) return res.status(400).json({ code: STATUS_CODE.E24 });
+
+      await Material.delete(id);
+
+      return res.status(201).json({ code: STATUS_CODE.S01 });
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
 }
 
 export default new MaterialController();
