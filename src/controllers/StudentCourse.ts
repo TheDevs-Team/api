@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { isEmpty } from 'lodash';
-import { getRepository, Not } from 'typeorm';
+import { getRepository } from 'typeorm';
 import { Course as CourseModel, User as UserModel, StudentCourse as StudentCourseModel } from '../models';
 import { STATUS_CODE } from '../utils';
 
@@ -76,19 +76,13 @@ class StudentCourseController {
 
   async notInCourse(req: Request, res: Response): Promise<Response> {
     try {
-      const { course_id } = req.body;
+      const User = getRepository(UserModel);
 
-      const StudentCourse = getRepository(StudentCourseModel);
-
-      const students = await StudentCourse.find({
-        relations: ['user'],
-        where: {
-          course_id: Not(course_id),
-          user: { type: 'USER', financial_status: 'PAID', active: true },
-        },
+      const users = await User.find({
+        where: { type: 'USER', financial_status: 'PAID', active: true },
       });
 
-      return res.status(200).json(students);
+      return res.status(200).json(users);
     } catch (err) {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
