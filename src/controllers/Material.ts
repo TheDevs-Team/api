@@ -37,6 +37,24 @@ class MaterialController {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
   }
+
+  async listByCourse(req: Request, res: Response): Promise<Response> {
+    const Material = getRepository(MaterialModel);
+    const Course = getRepository(CourseModel);
+
+    try {
+      const { course_id } = req.params;
+      const course = await Course.find({ where: { id: course_id } });
+
+      if (isEmpty(course)) return res.status(400).json({ code: STATUS_CODE.E21 });
+
+      const material = await Material.find({ where: { course_id }, relations: ['course'] });
+
+      return res.status(201).json(material);
+    } catch (err) {
+      return res.status(400).json({ code: STATUS_CODE.E01 });
+    }
+  }
 }
 
 export default new MaterialController();
