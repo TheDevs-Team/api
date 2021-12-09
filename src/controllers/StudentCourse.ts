@@ -63,7 +63,7 @@ class StudentCourseController {
 
   async inCourse(req: Request, res: Response): Promise<Response> {
     try {
-      const { course_id } = req.body;
+      const { course_id } = req.params;
 
       const StudentCourse = getRepository(StudentCourseModel);
 

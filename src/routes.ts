@@ -59,7 +59,7 @@ routes.post('/student-course/create', authentication, StudentCourseController.cr
 routes.get('/student-course/list', authentication, StudentCourseController.list);
 routes.get('/student-course/find', authentication, StudentCourseController.find);
 routes.get('/student-course/not-in-course', authentication, StudentCourseController.notInCourse);
-routes.post('/student-course/in-course', authentication, StudentCourseController.inCourse);
+routes.get('/student-course/:course_id', authentication, StudentCourseController.inCourse);
 
 /**
   @description Service Controller
