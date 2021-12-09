@@ -25,4 +25,5 @@ export enum STATUS_CODE {
   **/
   E20 = 'E20', // User is not admin or a manager
   E21 = 'E21', // Course not exists
+  E22 = 'E22', // USer already in Course
 }

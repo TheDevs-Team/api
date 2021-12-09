@@ -21,6 +21,10 @@ class StudentCourseController {
 
       if (isEmpty(course)) return res.status(400).json({ code: STATUS_CODE.E21 });
 
+      const inCourse = await StudentCourse.findOne({ course_id, user_id });
+
+      if (!isEmpty(inCourse)) return res.status(400).json({ code: STATUS_CODE.E22 });
+
       const studentCourse = StudentCourse.create({ course_id, user_id }) as StudentCourseModel & StudentCourseType;
 
       await StudentCourse.save(studentCourse);
