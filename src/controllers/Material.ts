@@ -55,7 +55,7 @@ class MaterialController {
 
       if (isEmpty(course)) return res.status(400).json({ code: STATUS_CODE.E21 });
 
-      const material = Material.findOne({ where: { id, course_id } });
+      const material = await Material.findOne({ where: { id, course_id } });
 
       if (isEmpty(material)) return res.status(400).json({ code: STATUS_CODE.E24 });
 
