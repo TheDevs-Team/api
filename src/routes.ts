@@ -50,6 +50,7 @@ routes.put('/course', authentication, CourseController.update);
 
 routes.post('/material/create', authentication, MaterialController.create);
 routes.get('/material/:course_id', authentication, MaterialController.list);
+routes.post('/material/remove', authentication, MaterialController.remove);
 
 /**
   @description Students Course Controller
