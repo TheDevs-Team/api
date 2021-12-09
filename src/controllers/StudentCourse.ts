@@ -29,9 +29,9 @@ class StudentCourseController {
 
       await StudentCourse.save(studentCourse);
 
-      return res.status(201).json(studentCourse);
+      return res.status(201).json(true);
     } catch (err) {
-      return res.status(400).json({ code: STATUS_CODE.E01 });
+      return res.status(400).json(false);
     }
   }
 
