@@ -60,6 +60,7 @@ routes.get('/student-course/list', authentication, StudentCourseController.list)
 routes.get('/student-course/find', authentication, StudentCourseController.find);
 routes.get('/student-course/not-in-course', authentication, StudentCourseController.notInCourse);
 routes.get('/student-course/:course_id', authentication, StudentCourseController.inCourse);
+routes.post('/student-course/remove', authentication, StudentCourseController.remove);
 
 /**
   @description Service Controller

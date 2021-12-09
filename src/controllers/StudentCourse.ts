@@ -91,6 +91,34 @@ class StudentCourseController {
       return res.status(400).json({ code: STATUS_CODE.E01 });
     }
   }
+
+  async remove(req: Request, res: Response): Promise<Response> {
+    const Course = getRepository(CourseModel);
+    const User = getRepository(UserModel);
+    const StudentCourse = getRepository(StudentCourseModel);
+
+    try {
+      const { course_id, user_id }: CreateStudentCourseType = req.body;
+
+      const user = await User.findOne({ id: user_id });
+
+      if (isEmpty(user)) return res.status(400).json({ code: STATUS_CODE.E11 });
+
+      const course = await Course.findOne({ id: course_id });
+
+      if (isEmpty(course)) return res.status(400).json({ code: STATUS_CODE.E21 });
+
+      const notInCourse = await StudentCourse.findOne({ course_id, user_id });
+
+      if (isEmpty(notInCourse)) return res.status(400).json({ code: STATUS_CODE.E23 });
+
+      await StudentCourse.delete({ course_id, user_id });
+
+      return res.status(201).json(true);
+    } catch (err) {
+      return res.status(400).json(false);
+    }
+  }
 }
 
 export default new StudentCourseController();
