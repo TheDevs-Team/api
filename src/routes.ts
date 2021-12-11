@@ -67,7 +67,7 @@ routes.post('/student-course/remove', authentication, StudentCourseController.re
   @description Service Controller
 **/
 
-routes.get('/service/file/create', authentication, uploads.single('file'), ServiceController.uploadFile);
+routes.post('/service/file/create', authentication, uploads.single('file'), ServiceController.uploadFile);
 
 /**
   @description Dashboard Controller
