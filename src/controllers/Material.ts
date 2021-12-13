@@ -36,7 +36,11 @@ class MaterialController {
 
       if (isEmpty(course)) return res.status(400).json({ code: STATUS_CODE.E21 });
 
-      const material = await Material.find({ where: { course_id }, relations: ['course'] });
+      const material = await Material.find({
+        where: { course_id },
+        relations: ['course'],
+        order: { created_at: 'DESC' },
+      });
 
       return res.status(201).json(material);
     } catch (err) {
